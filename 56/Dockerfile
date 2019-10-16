@@ -6,53 +6,53 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/3.8/testing" >> /etc/apk/reposito
 
 # Add basics first
 RUN apk update && apk upgrade && apk add \
-	bash apache2 php7-apache2 curl ca-certificates openssl openssh git php7 php7-phar php7-json php7-iconv php7-openssl tzdata openntpd nano
+	bash apache2 php5-apache2 curl ca-certificates openssl openssh git php5 php5-phar php5-json php5-iconv php5-openssl tzdata openntpd nano
 
 # Add Composer
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 # Setup apache and php
 RUN apk add \
-	php7-ftp \
-	php7-xdebug \
-	php7-mcrypt \
-	php7-mbstring \
-	php7-soap \
-	php7-gmp \
-	php7-pdo_odbc \
-	php7-dom \
-	php7-pdo \
-	php7-zip \
-	php7-mysqli \
-	php7-sqlite3 \
-	php7-pdo_pgsql \
-	php7-bcmath \
-	php7-gd \
-	php7-odbc \
-	php7-pdo_mysql \
-	php7-pdo_sqlite \
-	php7-gettext \
-	php7-xml \
-	php7-xmlreader \
-	php7-xmlwriter \
-	php7-tokenizer \
-	php7-xmlrpc \
-	php7-bz2 \
-	php7-pdo_dblib \
-	php7-curl \
-	php7-ctype \
-	php7-session \
-	php7-redis \
-	php7-exif \
-	php7-intl \
-	php7-fileinfo \
-	php7-ldap \
-	php7-apcu
+	php5-ftp \
+	php5-xdebug \
+	php5-mcrypt \
+	php5-mbstring \
+	php5-soap \
+	php5-gmp \
+	php5-pdo_odbc \
+	php5-dom \
+	php5-pdo \
+	php5-zip \
+	php5-mysqli \
+	php5-sqlite3 \
+	php5-pdo_pgsql \
+	php5-bcmath \
+	php5-gd \
+	php5-odbc \
+	php5-pdo_mysql \
+	php5-pdo_sqlite \
+	php5-gettext \
+	php5-xml \
+	php5-xmlreader \
+	php5-xmlwriter \
+	php5-tokenizer \
+	php5-xmlrpc \
+	php5-bz2 \
+	php5-pdo_dblib \
+	php5-curl \
+	php5-ctype \
+	php5-session \
+	php5-redis \
+	php5-exif \
+	php5-intl \
+	php5-fileinfo \
+	php5-ldap \
+	php5-apcu
 
 # Problems installing in above stack
-RUN apk add php7-simplexml
+RUN apk add php5-simplexml
 
-RUN cp /usr/bin/php7 /usr/bin/php \
+RUN cp /usr/bin/php5 /usr/bin/php \
     && rm -f /var/cache/apk/*
 
 # Add apache to run and configure
