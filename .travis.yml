@@ -1,12 +1,18 @@
 services:
   - docker
 
-script:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - cd 70/
-  - docker build -t ebeyond/docker-php:7.0 .
-  - docker push ebeyond/docker-php:7.0
-  - cd ../74/
-  - docker build -t ebeyond/docker-php:7.3 .
-  - docker push ebeyond/docker-php:7.3
+jobs:
+  include:
+    - stage: build-docker-images
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - cd 70/
+      - docker build -t ebeyond/docker-php:7.0 .
+      - docker push ebeyond/docker-php:7.0
+    - # stage name not required, will continue to use `test`
+      script: 
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - cd 74/
+      - docker build -t ebeyond/docker-php:7.3 .
+      - docker push ebeyond/docker-php:7.3
   
