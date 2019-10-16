@@ -8,9 +8,6 @@ MAINTAINER Marc Ende <me@e-beyond.de>
 RUN apk update && apk upgrade && apk add \
 	bash apache2 php5-apache2 curl ca-certificates openssl openssh git php5 php5-phar php5-json php5-iconv php5-openssl tzdata openntpd nano
 
-# Add Composer
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
-
 # Setup apache and php
 RUN apk add \
 	php5-ftp \
@@ -54,6 +51,9 @@ RUN apk add php5-simplexml
 
 RUN cp /usr/bin/php5 /usr/bin/php \
     && rm -f /var/cache/apk/*
+    
+# Add Composer
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 # Add apache to run and configure
 RUN sed -i "s/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/" /etc/apache2/httpd.conf \
