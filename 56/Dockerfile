@@ -2,7 +2,7 @@ FROM alpine:3.8
 MAINTAINER Marc Ende <me@e-beyond.de>
 
 # Add repos
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/3.8/testing" >> /etc/apk/repositories
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/v3.8/testing" >> /etc/apk/repositories
 
 # Add basics first
 RUN apk update && apk upgrade && apk add \
