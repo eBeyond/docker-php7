@@ -1,40 +1,44 @@
-FROM php:7.0-apache-jessie
+FROM php:7.3-apache-stretch
 RUN apt update
 RUN apt upgrade -y
 RUN apt install -y apt-utils
 RUN a2enmod rewrite
-RUN apt install -y libmcrypt-dev
-#RUN docker-php-ext-install mcrypt
-RUN apt install -y libicu-dev
-RUN docker-php-ext-install -j$(nproc) intl
-RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev
+RUN apt-get install -y 
+# php-apc
+# libpng12-dev
+RUN apt install -y \
+    libmcrypt-dev \
+    libicu-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libxml2-dev \
+    libldb-dev \
+    libldap2-dev \ 
+    libxml2-dev \
+    libssl-dev \
+    libxslt-dev \
+    libpq-dev \
+    mysql-client  \
+    libsqlite3-dev \
+    libsqlite3-0 \
+    libc-client-dev \
+    libkrb5-dev \
+    curl \
+    libcurl3 \
+    libcurl3-dev \
+    firebird-dev \
+    libpspell-dev \
+    aspell-en \
+    aspell-de \  
+    libtidy-dev \
+    libsnmp-dev \
+    librecode0 \
+    librecode-dev \
+    libbz2-dev \
+    libzip-dev
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ 
 RUN docker-php-ext-install -j$(nproc) gd    
-#RUN apt install -y php-apc    
-RUN apt install -y libxml2-dev 
-RUN apt install -y libldb-dev
-RUN apt install -y libldap2-dev 
-RUN apt install -y libxml2-dev
-RUN apt install -y libssl-dev
-RUN apt install -y libxslt-dev
-RUN apt install -y libpq-dev
-RUN apt install -y postgresql-client
-RUN apt install -y mysql-client 
-RUN apt install -y libsqlite3-dev
-RUN apt install -y libsqlite3-0
-RUN apt install -y libc-client-dev
-RUN apt install -y libkrb5-dev
-RUN apt install -y curl
-RUN apt install -y libcurl3
-RUN apt install -y libcurl3-dev
-RUN apt install -y firebird-dev
-RUN apt-get install -y libpspell-dev
-RUN apt-get install -y aspell-en
-RUN apt-get install -y aspell-de  
-RUN apt install -y libtidy-dev
-RUN apt install -y libsnmp-dev
-RUN apt install -y librecode0
-RUN apt install -y librecode-dev
+RUN docker-php-ext-install -j$(nproc) intl
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 #RUN pecl install apc
 RUN docker-php-ext-install opcache
@@ -60,8 +64,6 @@ RUN docker-php-ext-install sockets
 RUN docker-php-ext-install pdo
 RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install tokenizer
-RUN docker-php-ext-install pgsql
-RUN docker-php-ext-install pdo_pgsql
 RUN docker-php-ext-install pdo_mysql 
 RUN docker-php-ext-install pdo_sqlite
 RUN docker-php-ext-install intl
@@ -107,5 +109,7 @@ RUN docker-php-ext-install xml
 RUN docker-php-ext-install xmlrpc
 RUN docker-php-ext-install xmlwriter             
 # idk bz2 enchant 
-#RUN apt install - y libbz2-dev
-#RUN docker-php-ext-install bz2
+RUN docker-php-ext-install bz2
+RUN pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
