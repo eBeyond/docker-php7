@@ -5,18 +5,21 @@ jobs:
   include:
     - stage: build-docker-images
       script:
+      - set -e
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - cd 70/
       - docker build -t ebeyond/docker-php:7.0 .
       - docker push ebeyond/docker-php:7.0
     - # stage name not required, will continue to use `test`
       script: 
+      - set -e
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - cd 73/
       - docker build -t ebeyond/docker-php:7.3 .
       - docker push ebeyond/docker-php:7.3
     - # stage name not required, will continue to use `test`
       script: 
+      - set -e
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - cd 56/
       - docker build -t ebeyond/docker-php:5.6 .
