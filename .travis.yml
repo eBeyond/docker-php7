@@ -14,9 +14,9 @@ jobs:
       script: 
       - set -e
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - cd 73/
-      - docker build -t ebeyond/docker-php:7.3 .
-      - docker push ebeyond/docker-php:7.3
+      - cd 72/
+      - docker build -t ebeyond/docker-php:7.2 .
+      - docker push ebeyond/docker-php:7.2
     - # stage name not required, will continue to use `test`
       script: 
       - set -e
