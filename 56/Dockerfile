@@ -11,9 +11,7 @@ RUN apk update && apk upgrade && apk add \
 # Setup apache and php
 RUN apk add \
 	php5-ftp \
-	php5-xdebug \
 	php5-mcrypt \
-	php5-mbstring \
 	php5-soap \
 	php5-gmp \
 	php5-pdo_odbc \
@@ -31,20 +29,72 @@ RUN apk add \
 	php5-gettext \
 	php5-xml \
 	php5-xmlreader \
-	php5-xmlwriter \
-	php5-tokenizer \
 	php5-xmlrpc \
 	php5-bz2 \
 	php5-pdo_dblib \
 	php5-curl \
 	php5-ctype \
-	php5-session \
-	php5-redis \
 	php5-exif \
 	php5-intl \
-	php5-fileinfo \
 	php5-ldap \
-	php5-apcu
+	php5-apcu \
+    php5-curl \
+    php5-imap 
+	
+# php5-bcmath
+# php5-bz2
+# php5-calendar
+# php5-cgi
+# php5-cli
+# php5-common
+# php5-ctype
+# php5-dba
+# php5-dbg
+# php5-dev
+# php5-doc
+# php5-dom
+# php5-embed
+# php5-enchant
+# php5-exif
+# php5-fpm
+# php5-gd
+# php5-gettext
+# php5-gmp
+# php5-intl
+# php5-ldap
+# php5-mcrypt
+# php5-mysql
+# php5-mysqli
+# php5-opcache
+# php5-openssl
+# php5-pcntl
+# php5-pdo
+# php5-pdo_dblib
+# php5-pdo_mysql
+# php5-pdo_pgsql
+# php5-pdo_sqlite
+# php5-pear
+# php5-pgsql
+# php5-phpdbg
+# php5-posix
+# php5-pspell
+# php5-shmop
+# php5-snmp
+# php5-soap
+# php5-sockets
+# php5-sqlite3
+# php5-suhosin
+# php5-sysvmsg
+# php5-sysvsem
+# php5-sysvshm
+# php5-wddx
+# php5-xml
+# php5-xmlreader
+# php5-xmlrpc
+# php5-xsl
+# php5-zip
+	
+	
 
 # Problems installing in above stack
 RUN apk add php5-simplexml
