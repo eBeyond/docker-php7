@@ -97,7 +97,7 @@ RUN apk add \
 	
 
 # Problems installing in above stack
-RUN apk add php5-simplexml
+#RUN apk add php5-simplexml
 
 RUN cp /usr/bin/php5 /usr/bin/php \
     && rm -f /var/cache/apk/*
