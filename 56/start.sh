@@ -80,5 +80,8 @@ echo "Clearing any old processes..."
 rm -f /run/apache2/apache2.pid
 rm -f /run/apache2/httpd.pid
 
+cat /etc/apache2/httpd.conf  
+
 echo "Starting apache..."
-/usr/sbin/httpd -D FOREGROUND
+/usr/sbin/httpd -DFOREGROUND
+echo "Started"
