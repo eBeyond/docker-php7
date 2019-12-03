@@ -13,6 +13,7 @@
 #ntpd -s
 
 sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/httpd.conf
+sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/httpd.conf
 
 # Apache server name change
 if [ ! -z "$APACHE_SERVER_NAME" ]
