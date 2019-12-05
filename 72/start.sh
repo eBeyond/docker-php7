@@ -12,6 +12,8 @@
 # In addition you may want to add the SYS_NICE capability, in order for ntpd to be able to modify its priority.
 #ntpd -s
 
+chsh -s /bin/bash www-data
+
 # Apache server name change
 if [ ! -z "$APACHE_SERVER_NAME" ]
 	then
