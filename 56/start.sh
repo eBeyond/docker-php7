@@ -12,6 +12,9 @@
 # In addition you may want to add the SYS_NICE capability, in order for ntpd to be able to modify its priority.
 #ntpd -s
 
+chsh -s /bin/bash www-data
+sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/httpd.conf
+sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/httpd.conf
 # Apache server name change
 if [ ! -z "$APACHE_SERVER_NAME" ]
 	then
