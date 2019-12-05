@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Set the timezone. Base image does not contain the setup-timezone script, so an alternate way is used.
 #if [ "$CONTAINER_TIMEZONE" ]; then
