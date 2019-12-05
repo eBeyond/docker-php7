@@ -12,7 +12,7 @@
 # In addition you may want to add the SYS_NICE capability, in order for ntpd to be able to modify its priority.
 #ntpd -s
 
-PHP_INI=/usr/local/etc/php
+export PHP_INI=/usr/local/etc/php
 
 chsh -s /bin/bash www-data
 sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/httpd.conf
