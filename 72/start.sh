@@ -12,32 +12,23 @@
 # In addition you may want to add the SYS_NICE capability, in order for ntpd to be able to modify its priority.
 #ntpd -s
 
-export PHP_INI=/usr/local/etc/php
+mkdir /run/apache2
+chown apache /run/apache2
 
+export PHP_INI=/etc/php7/php.ini
 
-chsh -s /bin/bash www-data
-sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/apache2.conf
-sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/ports.conf
-sed -i 's/Listen 443/Listen 0.0.0.0:443/' /etc/apache2/ports.conf
+sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/httpd.conf
+sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/httpd.conf
+sed -i 's/apache:x:100:101:apache:\/var\/www:\/sbin\/nologin/apache:x:100:101:apache:\/var\/www:\/bin\/bash/' /etc/passwd
 
 # Apache server name change
 if [ ! -z "$APACHE_SERVER_NAME" ]
 	then
-		sed -i "s/#ServerName www.example.com/ServerName $APACHE_SERVER_NAME/" /etc/apache2/sites-available/000-default.conf
+		sed -i "s/#ServerName www.example.com:80/ServerName $APACHE_SERVER_NAME/" /etc/apache2/httpd.conf
 		echo "Changed server name to '$APACHE_SERVER_NAME'..."
 	else
+		sed -i "s/#ServerName www.example.com:80/ServerName localhost/" /etc/apache2/httpd.conf
 		echo "NOTICE: Change 'ServerName' globally and hide server message by setting environment variable >> 'APACHE_SERVER_NAME=your.server.name' in docker command or docker-compose file"
-fi
-
-if [[ -v ENVIRONMENT ]] && [[ "$ENVIRONMENT" == "production" ]]
-	then
-		mv /usr/local/etc/php/php.ini-production  $PHP_INI
-		rm /usr/local/etc/php/php.ini-development
-		echo "Enabled production ($PHP_INI)"
-	else
-		mv /usr/local/etc/php/php.ini-development  $PHP_INI
-		rm /usr/local/etc/php/php.ini-production
-		echo "Enabled development ($PHP_INI)"
 fi
 
 # PHP Config
@@ -99,5 +90,9 @@ echo "Clearing any old processes..."
 rm -f /run/apache2/apache2.pid
 rm -f /run/apache2/httpd.pid
 
+echo "Checking config"
+httpd -t
+
 echo "Starting apache..."
 httpd -D FOREGROUND
+echo "Starting apache... DONE"
