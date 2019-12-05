@@ -14,14 +14,16 @@
 
 export PHP_INI=/usr/local/etc/php
 
+
 chsh -s /bin/bash www-data
-sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/httpd.conf
-sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/httpd.conf
+sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/apache2.conf
+sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/ports.conf
+sed -i 's/Listen 443/Listen 0.0.0.0:443/' /etc/apache2/ports.conf
 
 # Apache server name change
 if [ ! -z "$APACHE_SERVER_NAME" ]
 	then
-		sed -i "s/#ServerName www.example.com:80/ServerName $APACHE_SERVER_NAME/" /etc/apache2/httpd.conf
+		sed -i "s/#ServerName www.example.com/ServerName $APACHE_SERVER_NAME/" /etc/apache2/sites-available/000-default.conf
 		echo "Changed server name to '$APACHE_SERVER_NAME'..."
 	else
 		echo "NOTICE: Change 'ServerName' globally and hide server message by setting environment variable >> 'APACHE_SERVER_NAME=your.server.name' in docker command or docker-compose file"
@@ -29,9 +31,13 @@ fi
 
 if [[ -v ENVIRONMENT ]] && [[ "$ENVIRONMENT" == "production" ]]
 	then
-		cp /usr/local/etc/php/php.ini-production  $PHP_INI
+		mv /usr/local/etc/php/php.ini-production  $PHP_INI
+		rm /usr/local/etc/php/php.ini-development
+		echo "Enabled production ($PHP_INI)"
 	else
-		cp /usr/local/etc/php/php.ini-development  $PHP_INI
+		mv /usr/local/etc/php/php.ini-development  $PHP_INI
+		rm /usr/local/etc/php/php.ini-production
+		echo "Enabled development ($PHP_INI)"
 fi
 
 # PHP Config
