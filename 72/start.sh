@@ -20,6 +20,7 @@ export PHP_INI=/etc/php7/php.ini
 sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/httpd.conf
 sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/httpd.conf
 sed -i 's/apache:x:100:101:apache:\/var\/www:\/sbin\/nologin/apache:x:100:101:apache:\/var\/www:\/bin\/bash/' /etc/passwd
+sed -i 's/^#LoadModule remoteip_module modules\/mod_remoteip.so/LoadModule remoteip_module modules\/mod_remoteip.so/' /etc/apache2/httpd.conf
 
 # Apache server name change
 if [ ! -z "$APACHE_SERVER_NAME" ]
