@@ -66,6 +66,7 @@ RUN sed -i "s/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/" /etc/apac
     && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
 
 RUN mkdir /app && mkdir /app/public && chown -R apache:apache /app && chmod -R 755 /app && mkdir bootstrap
+ADD apache-conf/remoteproxy.conf /etc/apache2/conf.d/
 ADD start.sh /bootstrap/
 RUN chmod +x /bootstrap/start.sh
 
