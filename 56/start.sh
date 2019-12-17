@@ -17,8 +17,8 @@ sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/a
 sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/httpd.conf
 sed '/^xfs.*$/d' /etc/group
 sed '/^xfs.*$/d' /etc/passwd
-sed '/^apache:x:101/apache:x:33/g' /etc/group
-sed '/^apache:x:100:101/apache:x:33:33/g' /etc/passwd
+sed 's/^apache:x:101/apache:x:33/' /etc/group
+sed 's/^apache:x:100:101/apache:x:33:33/' /etc/passwd
 
 mkdir /run/apache2
 chown apache /run/apache2
