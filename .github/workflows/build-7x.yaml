@@ -1,4 +1,4 @@
-name: Publish docker-php7x
+name: Publish docker-php 7x
 on: [push]
 jobs:
   build:
