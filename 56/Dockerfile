@@ -115,10 +115,10 @@ RUN sed -i "s/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/" /etc/apac
     && sed -i "s#/var/www/localhost/htdocs#/app/public#" /etc/apache2/httpd.conf \
     && sed -i "s#^ErrorLog .*#ErrorLog /dev/stderr#g" /etc/apache2/httpd.conf \
     && sed -i "s#CustomLog .*#CustomLog /dev/stdout combined#g" /etc/apache2/httpd.conf \
-    && sed '/^xfs.*$/d' /etc/group \
-    && sed '/^xfs.*$/d' /etc/passwd \
-    && sed 's/^apache:x:101/apache:x:33/' /etc/group \
-    && sed 's/^apache:x:100:101/apache:x:33:33/' /etc/passwd \
+    && sed -i '/^xfs.*$/d' /etc/group \
+    && sed -i '/^xfs.*$/d' /etc/passwd \
+    && sed -i 's/^apache:x:101/apache:x:33/' /etc/group \
+    && sed -i 's/^apache:x:100:101/apache:x:33:33/' /etc/passwd \
     && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
 
 RUN mkdir /app && mkdir /app/public && chown -R apache:apache /app && chmod -R 755 /app && mkdir bootstrap
