@@ -122,7 +122,7 @@ RUN sed -i "s/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/" /etc/apac
     && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
 
 RUN mkdir /app && mkdir /app/public && chown -R apache:apache /app && chmod -R 755 /app && mkdir bootstrap
-ADD start.sh /bootstrap/
+ADD 56/start.sh /bootstrap/
 RUN chmod +x /bootstrap/start.sh
 RUN mkdir -p /run/apache2 && chown -R apache:apache /run/apache2
 EXPOSE 80
