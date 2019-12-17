@@ -6,7 +6,7 @@ MAINTAINER Marc Ende <me@e-beyond.de>
 
 # Add basics first
 RUN apk update && apk upgrade && apk add \
-	bash apache2 php7-apache2 curl ca-certificates openssl openssh git php7 php7-phar php7-json php7-iconv php7-openssl tzdata openntpd nano
+	bash apache2 php7-apache2 curl ca-certificates openssl openssh git php7 php7-phar php7-json php7-iconv php7-openssl tzdata
 
 # Add Composer
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
@@ -63,11 +63,15 @@ RUN sed -i "s/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/" /etc/apac
     && sed -i "s/#LoadModule\ deflate_module/LoadModule\ deflate_module/" /etc/apache2/httpd.conf \
     && sed -i "s#^DocumentRoot \".*#DocumentRoot \"/app/public\"#g" /etc/apache2/httpd.conf \
     && sed -i "s#/var/www/localhost/htdocs#/app/public#" /etc/apache2/httpd.conf \
+    && sed '/^xfs.*$/d' /etc/group \
+    && sed '/^xfs.*$/d' /etc/passwd \
+    && sed 's/^apache:x:101/apache:x:33/' /etc/group \
+    && sed 's/^apache:x:100:101/apache:x:33:33/' /etc/passwd \
     && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
 
 RUN mkdir /app && mkdir /app/public && chown -R apache:apache /app && chmod -R 755 /app && mkdir bootstrap
-ADD apache-conf/remoteproxy.conf /etc/apache2/conf.d/
-ADD start.sh /bootstrap/
+ADD 7x/apache-conf/remoteproxy.conf /etc/apache2/conf.d/
+ADD 7x/start.sh /bootstrap/
 RUN chmod +x /bootstrap/start.sh
 
 EXPOSE 80
