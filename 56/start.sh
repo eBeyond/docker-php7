@@ -15,6 +15,14 @@
 chsh -s /bin/bash www-data
 sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/httpd.conf
 sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/httpd.conf
+sed '/^xfs.*$/d' /etc/group
+sed '/^xfs.*$/d' /etc/passwd
+sed '/^apache:x:101/apache:x:33/g' /etc/group
+sed '/^apache:x:100:101/apache:x:33:33/g' /etc/passwd
+
+mkdir /run/apache2
+chown apache /run/apache2
+
 # Apache server name change
 if [ ! -z "$APACHE_SERVER_NAME" ]
 	then
