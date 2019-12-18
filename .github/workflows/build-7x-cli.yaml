@@ -11,5 +11,5 @@ jobs:
         name: ebeyond/docker-php-7.x-cli
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        dockerfile: 7x-cli/Dockerfile
+        #dockerfile: 7x-cli/Dockerfile
         cache: true
