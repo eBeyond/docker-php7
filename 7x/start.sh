@@ -19,8 +19,9 @@ export PHP_INI=/etc/php7/php.ini
 
 sed -i "s/DirectoryIndex index.html/DirectoryIndex index.html index.php/" /etc/apache2/httpd.conf
 sed -i 's/^Listen 80$/Listen 0.0.0.0:80/' /etc/apache2/httpd.conf
-sed -i 's/^CustomLog logs\/access\.log combined/CustomLog \/dev\/stdout combined/' /etc/apache2/httpd.conf
+sed -i 's/CustomLog logs\/access\.log combined/CustomLog \/dev\/stdout combined/' /etc/apache2/httpd.conf
 sed -i 's/^ErrorLog logs\/error\.log/ErrorLog \/dev\/stderr/' /etc/apache2/httpd.conf
+sed -i "s/\;\?\\s\?error_log = .*/error_log = \/dev\/stderr/" $PHP_INI
 
 ErrorLog logs/error.log
 sed -i 's/apache:x:100:101:apache:\/var\/www:\/sbin\/nologin/apache:x:100:101:apache:\/var\/www:\/bin\/bash/' /etc/passwd
@@ -55,7 +56,6 @@ if [ ! -z "$PHP_LOG_ERRORS_MAX_LEN" ]; then sed -i "s/\;\?\\s\?log_errors_max_le
 if [ ! -z "$PHP_IGNORE_REPEATED_ERRORS" ]; then sed -i "s/\;\?\\s\?ignore_repeated_errors = .*/ignore_repeated_errors = $PHP_IGNORE_REPEATED_ERRORS/" $PHP_INI && echo "Set PHP ignore_repeated_errors = $PHP_IGNORE_REPEATED_ERRORS..."; fi
 if [ ! -z "$PHP_REPORT_MEMLEAKS" ]; then sed -i "s/\;\?\\s\?report_memleaks = .*/report_memleaks = $PHP_REPORT_MEMLEAKS/" $PHP_INI && echo "Set PHP report_memleaks = $PHP_REPORT_MEMLEAKS..."; fi
 if [ ! -z "$PHP_HTML_ERRORS" ]; then sed -i "s/\;\?\\s\?html_errors = .*/html_errors = $PHP_HTML_ERRORS/" $PHP_INI && echo "Set PHP html_errors = $PHP_HTML_ERRORS..."; fi
-if [ ! -z "$PHP_ERROR_LOG" ]; then sed -i "s/\;\?\\s\?error_log = .*/error_log = $PHP_ERROR_LOG/" $PHP_INI && echo "Set PHP error_log = $PHP_ERROR_LOG..."; fi
 if [ ! -z "$PHP_POST_MAX_SIZE" ]; then sed -i "s/\;\?\\s\?post_max_size = .*/post_max_size = $PHP_POST_MAX_SIZE/" $PHP_INI && echo "Set PHP post_max_size = $PHP_POST_MAX_SIZE..."; fi
 if [ ! -z "$PHP_DEFAULT_MIMETYPE" ]; then sed -i "s/\;\?\\s\?default_mimetype = .*/default_mimetype = $PHP_DEFAULT_MIMETYPE/" $PHP_INI && echo "Set PHP default_mimetype = $PHP_DEFAULT_MIMETYPE..."; fi
 if [ ! -z "$PHP_DEFAULT_CHARSET" ]; then sed -i "s/\;\?\\s\?default_charset = .*/default_charset = $PHP_DEFAULT_CHARSET/" $PHP_INI && echo "Set PHP default_charset = $PHP_DEFAULT_CHARSET..."; fi
